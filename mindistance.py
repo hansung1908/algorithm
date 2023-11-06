@@ -2,7 +2,7 @@ import heapq
 
 def algorithm(graph, start, goal, heuristic):
     open_set = []  # 검사받지 못한 노드
-    came_from = {}  # 검사를 통해 찾은 최단거리 노드, 딕셔너리로 두 노드의 관계를 표현
+    came_from = {}  # 검사를 통해 찾은 최단거리 노드, 인덱스에 부모 노드, 밸류에 최단거리 자식 노드를 저장
 
     # 시작부터 목표까지의 실제 거리
     g_score = {node: float('inf') for node in graph}
@@ -32,6 +32,7 @@ def algorithm(graph, start, goal, heuristic):
             tentative_g_score = g_score[current_node] + cost
 
             # 잠정적인 최단 거리가 이웃하는 노드까지의 최단거리보다 작으면 해당 노드로 가는 길을 저장하고 힙에 추가
+            # 아직 이웃하는 노드까지의 최단거리가 없다면 처음 비교하는 값이 저장되어 그 값을 기준으로 비교
             if tentative_g_score < g_score[neighbor]:
                 came_from[neighbor] = current_node # 최단거리 노드로 저장
                 g_score[neighbor] = tentative_g_score # 잠정적인 최단거리를 해당 노드까지의 최단거리로 저장
@@ -71,7 +72,7 @@ heuristic = {
     'F' : 6,
     'G' : 5,
     'H' : 3,
-    'I' : 2,
+    'I' : 1,
     'J' : 0
 }
 
